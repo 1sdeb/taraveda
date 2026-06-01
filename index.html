@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#f7f1e6" />
+<title>Taraveda — Ancient Wisdom, Illuminated by AI</title>
+<meta name="description" content="Taraveda unites the timeless sciences of Jyotish and Vaastu with artificial intelligence to deliver refined, personal astrology and Vaastu guidance." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ivory:#f7f1e6;          /* page base */
+    --ivory-2:#efe5d3;
+    --cream:#fffdf8;          /* card surface */
+    --ink:#2c2335;            /* primary text (aubergine ink) */
+    --ink-soft:#5d5468;
+    --muted:#867a67;          /* warm muted */
+    --plum:#3b1d42;           /* deep aubergine feature band */
+    --plum-2:#2a1330;         /* deeper */
+    --gold:#b18a3b;           /* metallic gold */
+    --gold-bright:#cfa64c;
+    --gold-soft:#8a6a22;      /* deep gold for headings on light */
+    --teal:#1f6f63;           /* peacock secondary accent */
+    --rose:#c2856b;           /* warm glow */
+    --line:rgba(138,106,34,.24);
+    --cream-line:rgba(207,166,76,.34);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  ::selection{background:rgba(177,138,59,.22);color:var(--ink)}
+  body{
+    font-family:'Jost',sans-serif;
+    background:var(--ivory);
+    color:var(--ink);
+    line-height:1.65;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    -webkit-text-size-adjust:100%;text-size-adjust:100%;
+    -webkit-tap-highlight-color:rgba(177,138,59,.18);
+  }
+  /* top hairline frame */
+  body::before{content:"";position:fixed;top:0;left:0;right:0;height:3px;z-index:60;
+    background:linear-gradient(90deg,var(--gold-bright),var(--gold) 30%,var(--teal) 50%,var(--gold) 70%,var(--gold-bright))}
+
+  /* ---------- atmosphere ---------- */
+  .sky{position:fixed;inset:0;z-index:-3;
+    background:
+      radial-gradient(1100px 720px at 82% -12%, rgba(194,133,107,.16), transparent 60%),
+      radial-gradient(1000px 820px at 6% 4%, rgba(177,138,59,.14), transparent 55%),
+      radial-gradient(900px 760px at 50% 116%, rgba(31,111,99,.07), transparent 60%),
+      linear-gradient(180deg,#fbf6ec 0%,#f7f1e6 45%,#f1e7d6 100%);
+  }
+  .stars{position:fixed;inset:-50%;z-index:-2;background-repeat:repeat;
+    background-image:
+      radial-gradient(1.3px 1.3px at 20px 30px, rgba(177,138,59,.5), transparent),
+      radial-gradient(1.1px 1.1px at 120px 90px, rgba(194,133,107,.45), transparent),
+      radial-gradient(1px 1px at 220px 50px, rgba(177,138,59,.45), transparent),
+      radial-gradient(1.5px 1.5px at 300px 160px, rgba(138,106,34,.4), transparent);
+    background-size:360px 260px;opacity:.4;animation:drift 240s linear infinite}
+  @keyframes drift{to{transform:translate3d(-360px,-260px,0)}}
+  .grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+
+  /* ---------- ornaments ---------- */
+  .flr{display:block;width:172px;height:16px;margin:0 auto;color:var(--gold)}
+  .seal{width:58px;height:58px;color:var(--gold)}
+
+  /* ---------- nav ---------- */
+  header{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);
+    background:linear-gradient(180deg, rgba(251,246,236,.92), rgba(251,246,236,.55));
+    border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:82px}
+  .brand{display:flex;align-items:center;gap:13px;text-decoration:none}
+  .brand .mark{width:38px;height:38px;flex:none}
+  .brand .name{font-family:'Cinzel',serif;font-weight:600;font-size:1.4rem;letter-spacing:.2em;
+    color:var(--ink);text-transform:uppercase}
+  .brand .name span{color:var(--gold-soft)}
+  .navlinks{display:flex;align-items:center;gap:38px}
+  .navlinks a{color:var(--ink-soft);text-decoration:none;font-size:.9rem;letter-spacing:.06em;
+    position:relative;transition:color .25s}
+  .navlinks a:not(.cta)::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;
+    background:var(--gold);transition:width .3s}
+  .navlinks a:not(.cta):hover{color:var(--gold-soft)}
+  .navlinks a:not(.cta):hover::after{width:100%}
+  .navlinks .cta{padding:11px 24px;border:1px solid var(--gold);border-radius:2px;
+    color:var(--gold-soft);letter-spacing:.1em;font-size:.82rem;text-transform:uppercase;transition:all .35s}
+  .navlinks .cta:hover{background:var(--gold);color:#fffdf8}
+  .menu-btn{display:none;background:none;border:0;color:var(--gold-soft);font-size:1.6rem;cursor:pointer}
+
+  /* ---------- buttons ---------- */
+  .btn{font-family:'Jost',sans-serif;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;
+    cursor:pointer;padding:16px 38px;border-radius:2px;text-decoration:none;transition:all .35s;
+    border:1px solid transparent;display:inline-block}
+  .btn-gold{background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:#2a1c06;font-weight:500;
+    box-shadow:0 12px 30px -12px rgba(177,138,59,.7)}
+  .btn-gold:hover{transform:translateY(-3px);box-shadow:0 18px 38px -12px rgba(177,138,59,.85)}
+  .btn-ghost{border-color:var(--gold);color:var(--gold-soft)}
+  .btn-ghost:hover{background:rgba(177,138,59,.1);transform:translateY(-3px)}
+  .btn-light{border-color:rgba(247,241,230,.5);color:#f3e9d8}
+  .btn-light:hover{background:rgba(247,241,230,.12);transform:translateY(-3px)}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;padding:120px 0 110px;text-align:center}
+  .wheel{position:absolute;top:50%;left:50%;width:680px;height:680px;color:var(--gold);
+    transform:translate(-50%,-52%);opacity:.16;z-index:-1;animation:spin 200s linear infinite}
+  @keyframes spin{to{transform:translate(-50%,-52%) rotate(360deg)}}
+  .hero .seal{margin:0 auto 30px;opacity:0;animation:rise .9s .05s forwards}
+  .eyebrow{font-family:'Cinzel',serif;letter-spacing:.46em;font-size:.72rem;
+    color:var(--gold-soft);text-transform:uppercase;margin-bottom:30px;
+    opacity:0;animation:rise .9s .15s forwards}
+  .hero h1{font-family:'Cormorant Garamond',serif;font-weight:400;
+    font-size:clamp(2.9rem,7.4vw,5.8rem);line-height:1.05;letter-spacing:.01em;
+    margin-bottom:28px;opacity:0;animation:rise 1s .3s forwards;color:var(--ink)}
+  .hero h1 em{font-style:italic;font-weight:500;
+    background:linear-gradient(100deg,var(--gold-soft),var(--rose) 60%,var(--gold));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero p{max-width:600px;margin:0 auto 44px;color:var(--ink-soft);font-size:1.16rem;
+    font-weight:300;opacity:0;animation:rise 1s .45s forwards}
+  .hero-btns{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;
+    opacity:0;animation:rise 1s .6s forwards}
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+  .hero .seal,.eyebrow,.hero h1,.hero p,.hero-btns{transform:translateY(24px)}
+
+  /* ---------- section frame ---------- */
+  section{position:relative;padding:120px 0}
+  .sec-head{text-align:center;max-width:700px;margin:0 auto 70px}
+  .sec-head .tag{font-family:'Cinzel',serif;letter-spacing:.4em;font-size:.7rem;
+    color:var(--gold-soft);text-transform:uppercase}
+  .sec-head h2{font-family:'Cormorant Garamond',serif;font-weight:400;
+    font-size:clamp(2.2rem,5vw,3.6rem);margin:16px 0 22px;line-height:1.1;color:var(--ink)}
+  .sec-head h2 em{font-style:italic;color:var(--gold-soft)}
+  .sec-head p{color:var(--ink-soft);font-weight:300;font-size:1.05rem}
+
+  /* ---------- services ---------- */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .card{position:relative;padding:42px 34px;border:1px solid var(--cream-line);border-radius:4px;
+    background:linear-gradient(165deg,var(--cream),#fbf4e6);
+    box-shadow:0 18px 44px -28px rgba(70,45,15,.4);
+    transition:transform .45s,box-shadow .45s,border-color .45s;
+    display:flex;flex-direction:column}
+  .card::after{content:"";position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,var(--gold),var(--teal));
+    transform:scaleX(0);transform-origin:left;transition:transform .45s}
+  .card:hover{transform:translateY(-8px);box-shadow:0 30px 56px -28px rgba(70,45,15,.5);border-color:var(--gold)}
+  .card:hover::after{transform:scaleX(1)}
+  .medallion{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;margin-bottom:24px;
+    border:1px solid var(--gold);background:radial-gradient(circle at 50% 40%,rgba(177,138,59,.12),transparent 70%);
+    color:var(--gold-soft);transition:all .45s}
+  .card:hover .medallion{background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:#fffdf8;
+    transform:rotate(8deg)}
+  .medallion svg{width:30px;height:30px}
+  .card h3{font-family:'Cormorant Garamond',serif;font-size:1.78rem;font-weight:500;margin-bottom:12px;color:var(--ink)}
+  .card p{color:var(--muted);font-size:.97rem;font-weight:300;flex:1;line-height:1.7}
+  .card .price{margin-top:24px;padding-top:20px;border-top:1px solid var(--line);
+    display:flex;align-items:baseline;gap:8px}
+  .card .price .from{font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--muted)}
+  .card .price .amt{font-family:'Cormorant Garamond',serif;font-size:1.95rem;font-weight:600;color:var(--gold-soft)}
+  .card .price .per{font-size:.78rem;color:var(--muted)}
+  .price-note{text-align:center;color:var(--muted);font-size:.86rem;font-weight:300;max-width:660px;margin:46px auto 0}
+  .price-note a{color:var(--gold-soft);text-decoration:none;border-bottom:1px solid var(--line)}
+  .price-note a:hover{color:var(--gold)}
+
+  /* ---------- currency switcher ---------- */
+  .cur-switch{display:flex;align-items:center;justify-content:center;gap:14px;
+    flex-wrap:wrap;margin:0 auto 44px;max-width:520px}
+  .cur-switch-label{font-family:'Cinzel',serif;letter-spacing:.22em;font-size:.66rem;
+    text-transform:uppercase;color:var(--muted)}
+  .cur-select-wrap{position:relative}
+  .cur-switch select{appearance:none;-webkit-appearance:none;cursor:pointer;
+    font-family:'Jost',sans-serif;font-size:.92rem;color:var(--ink);
+    background:linear-gradient(165deg,var(--cream),#fbf4e6);
+    border:1px solid var(--gold);border-radius:2px;
+    padding:11px 42px 11px 18px;min-height:44px;letter-spacing:.02em;
+    box-shadow:0 10px 26px -18px rgba(177,138,59,.6);transition:box-shadow .25s,border-color .25s;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23b18a3b' stroke-width='2'%3E%3Cpath d='M3 5l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 16px center}
+  .cur-switch select:focus{outline:none;border-color:var(--gold-bright);
+    box-shadow:0 0 0 3px rgba(177,138,59,.16)}
+  .cur-switch select option{background:#fffdf8;color:var(--ink)}
+  .price .amt{transition:color .2s}
+
+  /* ---------- approach (dark jewel band) ---------- */
+  .band{position:relative;color:#f3e9d8;overflow:hidden;
+    background:
+      radial-gradient(900px 500px at 80% -10%, rgba(207,166,76,.16), transparent 60%),
+      radial-gradient(700px 500px at 10% 110%, rgba(31,111,99,.2), transparent 60%),
+      linear-gradient(160deg,var(--plum) 0%,var(--plum-2) 100%)}
+  .band::before,.band::after{content:"";position:absolute;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold-bright),transparent)}
+  .band::before{top:0}.band::after{bottom:0}
+  .band .star-dots{position:absolute;inset:0;z-index:0;opacity:.5;
+    background-image:
+      radial-gradient(1px 1px at 15% 30%,rgba(255,240,200,.7),transparent),
+      radial-gradient(1.4px 1.4px at 70% 20%,rgba(255,240,200,.6),transparent),
+      radial-gradient(1px 1px at 40% 70%,rgba(255,240,200,.5),transparent),
+      radial-gradient(1.2px 1.2px at 88% 65%,rgba(255,240,200,.6),transparent),
+      radial-gradient(1px 1px at 25% 85%,rgba(255,240,200,.5),transparent)}
+  .band .wrap{position:relative;z-index:1}
+  .band .sec-head h2,.band .sec-head h2 em{color:#f7eedd}
+  .band .sec-head h2 em{color:var(--gold-bright);font-style:italic}
+  .band .sec-head .tag{color:var(--gold-bright)}
+  .band .sec-head p{color:#d9c9b3}
+  .band .flr{color:var(--gold-bright)}
+  .how{display:grid;grid-template-columns:repeat(3,1fr);gap:44px;counter-reset:step}
+  .step{text-align:center;padding:0 6px}
+  .step .num{counter-increment:step;font-family:'Cinzel',serif;font-size:1.05rem;
+    width:66px;height:66px;margin:0 auto 26px;display:grid;place-items:center;border-radius:50%;
+    border:1px solid var(--gold-bright);color:var(--gold-bright);position:relative;
+    background:radial-gradient(circle,rgba(207,166,76,.14),transparent 70%)}
+  .step .num::before{content:counter(step,decimal-leading-zero)}
+  .step .num::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1px solid rgba(207,166,76,.28)}
+  .step h4{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:500;margin-bottom:10px;color:#f7eedd}
+  .step p{color:#cbbaa3;font-size:.96rem;font-weight:300}
+
+  /* ---------- contact ---------- */
+  .contact-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:60px;align-items:start}
+  .contact-info .tag{font-family:'Cinzel',serif;letter-spacing:.4em;font-size:.7rem;color:var(--gold-soft);text-transform:uppercase}
+  .contact-info h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.1rem,4.4vw,3.2rem);
+    font-weight:400;line-height:1.1;margin:16px 0 20px;color:var(--ink)}
+  .contact-info h2 em{font-style:italic;color:var(--gold-soft)}
+  .contact-info>p{color:var(--ink-soft);font-weight:300;margin-bottom:34px}
+  .contact-line{display:flex;align-items:center;gap:15px;margin-bottom:18px;color:var(--ink)}
+  .contact-line .ci{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
+    display:grid;place-items:center;color:var(--teal);flex:none;background:var(--cream)}
+  .contact-line .ci svg{width:19px;height:19px}
+  .contact-line a{color:var(--ink);text-decoration:none;transition:color .25s}
+  .contact-line a:hover{color:var(--gold-soft)}
+  .contact-line span.t{font-size:.96rem}
+
+  form{position:relative;background:linear-gradient(165deg,var(--cream),#fbf4e6);
+    border:1px solid var(--cream-line);border-radius:4px;padding:42px;
+    box-shadow:0 22px 54px -30px rgba(70,45,15,.45)}
+  .field{margin-bottom:22px}
+  .field label{display:block;font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+  .field input,.field select,.field textarea{width:100%;background:#fffefb;
+    border:1px solid var(--line);border-radius:2px;padding:14px 16px;color:var(--ink);
+    font-family:'Jost',sans-serif;font-size:.96rem;transition:border-color .25s,box-shadow .25s}
+  .field input::placeholder,.field textarea::placeholder{color:#b0a48d}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(177,138,59,.14)}
+  .field textarea{resize:vertical;min-height:118px}
+  .field select{appearance:none;cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23b18a3b' stroke-width='2'%3E%3Cpath d='M3 5l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 16px center}
+  .field select option{background:#fffdf8;color:var(--ink)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  form .btn-gold{width:100%;margin-top:8px;border:0}
+  .form-note{text-align:center;font-size:.82rem;color:var(--muted);margin-top:16px;font-weight:300}
+  .inline-legal{background:none;border:0;padding:0;cursor:pointer;font-family:'Jost',sans-serif;
+    font-size:.82rem;color:var(--gold-soft);text-decoration:underline;text-underline-offset:2px}
+  .inline-legal:hover{color:var(--gold)}
+  .form-msg{display:none;margin-top:18px;padding:14px 16px;border-radius:2px;font-size:.92rem;text-align:center}
+  .form-msg.ok{display:block;background:rgba(31,111,99,.1);border:1px solid var(--teal);color:#155047}
+  .form-msg.err{display:block;background:rgba(190,60,40,.08);border:1px solid rgba(190,60,40,.4);color:#9c2c1c}
+
+  /* ---------- disclaimer strip ---------- */
+  .disclaimer-strip{border-top:1px solid var(--line);background:rgba(239,229,211,.6)}
+  .disclaimer-strip .wrap{padding-top:30px;padding-bottom:30px}
+  .disclaimer-strip p{color:var(--muted);font-size:.82rem;font-weight:300;line-height:1.75;
+    max-width:920px;margin:0 auto;text-align:center}
+  .disclaimer-strip strong{color:var(--gold-soft);font-weight:500}
+
+  /* ---------- footer ---------- */
+  footer{position:relative;padding:64px 0 52px;text-align:center;color:#e9dcc8;
+    background:linear-gradient(160deg,var(--plum),var(--plum-2))}
+  footer::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold-bright),transparent)}
+  footer .brand{justify-content:center;margin-bottom:16px}
+  footer .brand .name{color:#f7eedd}
+  footer .brand .name span{color:var(--gold-bright)}
+  footer .tagline{color:#cbbaa3;font-size:.92rem;font-weight:300;font-style:italic;
+    font-family:'Cormorant Garamond',serif;font-size:1.12rem}
+  .legal-links{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:22px 0 8px}
+  .legal-links button{background:none;border:0;cursor:pointer;color:#cbbaa3;
+    font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+    padding:5px 12px;transition:color .25s}
+  .legal-links button:hover{color:var(--gold-bright)}
+  .legal-links .sep{color:rgba(207,166,76,.4);cursor:default;padding:5px 0}
+  footer .fnote{margin-top:10px;font-size:.76rem;color:#a18f76}
+
+  /* ---------- modal ---------- */
+  .modal-overlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
+    padding:24px;background:rgba(42,19,48,.55);backdrop-filter:blur(7px);opacity:0;transition:opacity .3s}
+  .modal-overlay.open{display:flex;opacity:1}
+  .modal{position:relative;width:100%;max-width:700px;max-height:86vh;overflow-y:auto;
+    background:linear-gradient(165deg,#fffdf8,#f5ecdb);border:1px solid var(--cream-line);
+    border-radius:4px;padding:48px 44px;transform:translateY(18px);transition:transform .3s;
+    box-shadow:0 40px 90px -24px rgba(42,19,48,.5)}
+  .modal::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--gold-bright),var(--teal))}
+  .modal-overlay.open .modal{transform:translateY(0)}
+  .modal::-webkit-scrollbar{width:8px}
+  .modal::-webkit-scrollbar-thumb{background:var(--gold);border-radius:8px}
+  .modal h3{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:500;color:var(--ink);
+    margin-bottom:6px;padding-right:30px}
+  .modal .upd{font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:24px}
+  .modal h4{font-family:'Cinzel',serif;font-size:.78rem;font-weight:600;color:var(--gold-soft);
+    letter-spacing:.1em;text-transform:uppercase;margin:24px 0 9px}
+  .modal p,.modal li{color:var(--ink-soft);font-size:.93rem;font-weight:300;line-height:1.8}
+  .modal ul{padding-left:20px;margin:6px 0}
+  .modal li{margin-bottom:7px}
+  .modal a{color:var(--gold-soft);text-decoration:none;border-bottom:1px solid var(--line)}
+  .modal a:hover{color:var(--gold)}
+  .modal-close{position:absolute;top:22px;right:24px;background:none;border:0;cursor:pointer;
+    color:var(--muted);font-size:1.8rem;line-height:1;transition:color .25s}
+  .modal-close:hover{color:var(--gold-soft)}
+  .modal .legal-foot{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted)}
+
+  /* ---------- scroll reveal ---------- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .grid .card{transition:transform .45s,box-shadow .45s,border-color .45s,opacity .9s,filter .9s}
+  .grid.in .card{opacity:1}
+  .grid:not(.in) .card{opacity:0;transform:translateY(28px)}
+  .grid.in .card:nth-child(1){transition-delay:0s}
+  .grid.in .card:nth-child(2){transition-delay:.08s}
+  .grid.in .card:nth-child(3){transition-delay:.16s}
+  .grid.in .card:nth-child(4){transition-delay:.24s}
+  .grid.in .card:nth-child(5){transition-delay:.32s}
+  .grid.in .card:nth-child(6){transition-delay:.4s}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:860px){
+    nav{height:74px}
+    .navlinks{position:fixed;inset:74px 0 auto;flex-direction:column;gap:0;
+      background:rgba(251,246,236,.98);border-bottom:1px solid var(--line);
+      box-shadow:0 20px 34px -22px rgba(60,30,40,.4);padding:8px 0;display:none}
+    .navlinks.open{display:flex}
+    .navlinks a{padding:16px 28px;width:100%;text-align:center}
+    .navlinks .cta{margin:12px 28px;text-align:center}
+    .menu-btn{display:grid;place-items:center;padding:6px;min-width:44px;min-height:44px}
+    .how{grid-template-columns:1fr;gap:46px}
+    .contact-grid{grid-template-columns:1fr;gap:40px}
+    .row{grid-template-columns:1fr}
+    .wheel{width:460px;height:460px}
+    section{padding:88px 0}
+    .hero{padding:84px 0 72px}
+  }
+  @media(max-width:620px){
+    .wrap{padding:0 22px}
+    .grid{grid-template-columns:1fr;gap:20px}
+    .card{padding:34px 28px}
+    .sec-head{margin-bottom:42px}
+    section{padding:72px 0}
+    .hero{padding:68px 0 58px}
+    .hero h1{font-size:clamp(2.4rem,9vw,3.2rem)}
+    .hero p{font-size:1.04rem}
+    .hero-btns{flex-direction:column;align-items:stretch}
+    .hero-btns .btn{width:100%;text-align:center}
+    .wheel{width:360px;height:360px;opacity:.13}
+    /* 16px on inputs/selects prevents iOS auto-zoom on focus */
+    .field input,.field select,.field textarea,.cur-switch select{font-size:16px}
+    .cur-switch{flex-direction:column;gap:10px;margin-bottom:36px}
+    .cur-switch select{width:100%;max-width:340px;text-align:center}
+    form{padding:30px 24px}
+    .modal{padding:38px 26px;max-height:90vh}
+    .modal h3{font-size:1.9rem}
+    .modal-overlay{padding:14px}
+    .disclaimer-strip p{font-size:.8rem;text-align:left}
+    footer{padding:52px 0 44px}
+  }
+  @media(max-width:380px){
+    .wrap{padding:0 18px}
+    .brand .name{font-size:1.1rem;letter-spacing:.12em}
+    .brand .mark{width:32px;height:32px}
+    .card h3{font-size:1.6rem}
+    .card{padding:30px 22px}
+    .btn{padding:15px 28px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .stars,.wheel{animation:none}
+    .reveal,.grid:not(.in) .card{opacity:1;transform:none}
+    *{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+  <div class="sky"></div>
+  <div class="stars"></div>
+  <div class="grain"></div>
+
+  <!-- ============ NAV ============ -->
+  <header>
+    <div class="wrap">
+      <nav>
+        <a href="#home" class="brand">
+          <svg class="mark" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="21" stroke="#a9741c" stroke-width="1.1" opacity=".55"/>
+            <circle cx="24" cy="24" r="14.5" stroke="#a9741c" stroke-width=".9" opacity=".4"/>
+            <path d="M24 3v42M3 24h42M9 9l30 30M39 9L9 39" stroke="#a9741c" stroke-width=".6" opacity=".3"/>
+            <path d="M24 10.5l3.5 9.9 10.2.2-8.2 6.2 3 10L24 30.6l-8.5 6 3-10-8.2-6.2 10.2-.2z" fill="#b18a3b"/>
+          </svg>
+          <span class="name">Tara<span>veda</span></span>
+        </a>
+        <div class="navlinks" id="nav">
+          <a href="#services">Services</a>
+          <a href="#approach">Our Approach</a>
+          <a href="#contact">Contact</a>
+          <a href="#contact" class="cta">Get a Reading</a>
+        </div>
+        <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="home">
+    <svg class="wheel" viewBox="0 0 200 200" fill="none" stroke="currentColor">
+      <circle cx="100" cy="100" r="96" stroke-width=".5"/>
+      <circle cx="100" cy="100" r="80" stroke-width=".5"/>
+      <circle cx="100" cy="100" r="62" stroke-width=".5"/>
+      <circle cx="100" cy="100" r="44" stroke-width=".5"/>
+      <g stroke-width=".5">
+        <line x1="100" y1="4" x2="100" y2="196"/><line x1="4" y1="100" x2="196" y2="100"/>
+        <line x1="32" y1="32" x2="168" y2="168"/><line x1="168" y1="32" x2="32" y2="168"/>
+        <line x1="66" y1="8" x2="134" y2="192"/><line x1="134" y1="8" x2="66" y2="192"/>
+        <line x1="8" y1="66" x2="192" y2="134"/><line x1="8" y1="134" x2="192" y2="66"/>
+      </g>
+    </svg>
+    <div class="wrap">
+      <svg class="seal" viewBox="0 0 80 80" fill="none" stroke="currentColor" aria-hidden="true">
+        <circle cx="40" cy="40" r="37" stroke-width="1" opacity=".55"/>
+        <circle cx="40" cy="40" r="29" stroke-width=".8" opacity=".4"/>
+        <g opacity=".7">
+          <path d="M40 13v6M40 61v6M13 40h6M61 40h6" stroke-width="1"/>
+          <path d="M22 22l3 3M58 22l-3 3M22 58l3-3M58 58l-3-3" stroke-width=".8"/>
+        </g>
+        <path d="M40 27l3.2 9 9.4.2-7.6 5.6 2.9 9-7.9-5.5-7.9 5.5 2.9-9-7.6-5.6 9.4-.2z" fill="currentColor" stroke="none"/>
+      </svg>
+      <p class="eyebrow">Vedic Wisdom · Illuminated by AI</p>
+      <h1>Where ancient stars<br>meet <em>intelligent insight</em></h1>
+      <p>Taraveda unites the timeless sciences of Jyotish and Vaastu with modern artificial intelligence — refined, personal guidance for your life, your home, and your destiny.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-gold">Begin Your Journey</a>
+        <a href="#services" class="btn btn-ghost">Explore Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section id="services">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="tag">Our Offerings</span>
+        <h2>Guidance for every <em>dimension</em> of life</h2>
+        <svg class="flr" viewBox="0 0 172 16" fill="none" aria-hidden="true">
+          <circle cx="8" cy="8" r="1.7" fill="currentColor"/>
+          <line x1="15" y1="8" x2="68" y2="8" stroke="currentColor" stroke-width="1"/>
+          <path d="M86 2l7 6-7 6-7-6z" stroke="currentColor" stroke-width="1"/>
+          <circle cx="86" cy="8" r="2" fill="currentColor"/>
+          <line x1="104" y1="8" x2="157" y2="8" stroke="currentColor" stroke-width="1"/>
+          <circle cx="164" cy="8" r="1.7" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="cur-switch reveal" role="group" aria-label="Choose display currency">
+        <span class="cur-switch-label">Show prices in</span>
+        <div class="cur-select-wrap">
+          <select id="currency" aria-label="Select currency">
+            <option value="INR">🇮🇳 INR · ₹ Indian Rupee</option>
+            <option value="USD">🇺🇸 USD · $ US Dollar</option>
+            <option value="EUR">🇪🇺 EUR · € Euro</option>
+            <option value="GBP">🇬🇧 GBP · £ British Pound</option>
+            <option value="AED">🇦🇪 AED · د.إ UAE Dirham</option>
+            <option value="AUD">🇦🇺 AUD · A$ Australian Dollar</option>
+            <option value="CAD">🇨🇦 CAD · C$ Canadian Dollar</option>
+            <option value="SGD">🇸🇬 SGD · S$ Singapore Dollar</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid">
+
+        <div class="card">
+          <div class="medallion"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3">
+            <circle cx="24" cy="24" r="18"/><circle cx="24" cy="24" r="7"/><path d="M24 6v6M24 36v6M6 24h6M36 24h6"/></svg></div>
+          <h3>Vedic Birth Chart</h3>
+          <p>An AI-crafted Janma Kundali decoding your planetary positions, dashas, and life path with classical precision.</p>
+          <div class="price"><span class="from">From</span><span class="amt" data-inr="750">₹750</span><span class="per">/ report</span></div>
+        </div>
+
+        <div class="card">
+          <div class="medallion"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3">
+            <path d="M38 26a14 14 0 11-16-18 11 11 0 0016 18z"/><circle cx="30" cy="16" r="1.4" fill="currentColor"/></svg></div>
+          <h3>Personal Horoscope</h3>
+          <p>Daily, monthly, and yearly predictions tuned to your moon sign and current planetary transits.</p>
+          <div class="price"><span class="from">From</span><span class="amt" data-inr="250">₹250</span><span class="per">/ reading</span></div>
+        </div>
+
+        <div class="card">
+          <div class="medallion"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3">
+            <path d="M24 40s-13-8.4-13-18a13 13 0 0126 0c0 9.6-13 18-13 18z"/><path d="M24 14v12M18 20h12" stroke-width="1.2"/></svg></div>
+          <h3>Kundali Matching</h3>
+          <p>Compatibility and Guna Milan analysis for marriage and partnerships, with insightful remedies.</p>
+          <div class="price"><span class="from">From</span><span class="amt" data-inr="550">₹550</span><span class="per">/ match report</span></div>
+        </div>
+
+        <div class="card">
+          <div class="medallion"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3">
+            <path d="M8 22L24 8l16 14"/><path d="M12 20v18h24V20"/><path d="M20 38V28h8v10"/></svg></div>
+          <h3>Vaastu for Home</h3>
+          <p>Harmonize your living space with directional energy mapping for prosperity, health, and peace.</p>
+          <div class="price"><span class="from">From</span><span class="amt" data-inr="1050">₹1,050</span><span class="per">/ consultation</span></div>
+        </div>
+
+        <div class="card">
+          <div class="medallion"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3">
+            <rect x="9" y="14" width="30" height="26"/><path d="M9 22h30M18 14V8h12v6"/><path d="M24 28v6" stroke-width="1.2"/></svg></div>
+          <h3>Vaastu for Business</h3>
+          <p>Align your workplace, office, or storefront with Vaastu principles to attract growth and stability.</p>
+          <div class="price"><span class="from">From</span><span class="amt" data-inr="2550">₹2,550</span><span class="per">/ consultation</span></div>
+        </div>
+
+        <div class="card">
+          <div class="medallion"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.3">
+            <circle cx="24" cy="24" r="16"/><path d="M24 24l9-5M24 24v-9"/><circle cx="24" cy="24" r="1.6" fill="currentColor"/></svg></div>
+          <h3>Muhurta &amp; Remedies</h3>
+          <p>Auspicious timing for important events, plus personalized gemstone, mantra, and ritual guidance.</p>
+          <div class="price"><span class="from">From</span><span class="amt" data-inr="500">₹500</span><span class="per">/ session</span></div>
+        </div>
+
+      </div>
+      <p class="price-note reveal">Prices are indicative starting points. Non-INR amounts are approximate conversions for reference and may vary with exchange rates; you will always be billed the confirmed amount. Final fees depend on the depth of analysis and are confirmed before any service begins. <a href="#contact">Contact us</a> for a custom quote.</p>
+    </div>
+  </section>
+
+  <!-- ============ APPROACH (jewel band) ============ -->
+  <section id="approach" class="band">
+    <span class="star-dots"></span>
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="tag">Our Approach</span>
+        <h2>Sacred tradition, <em>refined by intelligence</em></h2>
+        <p>We honor the scriptures while letting AI handle the calculations — so your guidance is both authentic and effortless.</p>
+        <svg class="flr" viewBox="0 0 172 16" fill="none" aria-hidden="true" style="margin-top:22px">
+          <circle cx="8" cy="8" r="1.7" fill="currentColor"/>
+          <line x1="15" y1="8" x2="68" y2="8" stroke="currentColor" stroke-width="1"/>
+          <path d="M86 2l7 6-7 6-7-6z" stroke="currentColor" stroke-width="1"/>
+          <circle cx="86" cy="8" r="2" fill="currentColor"/>
+          <line x1="104" y1="8" x2="157" y2="8" stroke="currentColor" stroke-width="1"/>
+          <circle cx="164" cy="8" r="1.7" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="how reveal">
+        <div class="step">
+          <div class="num"></div>
+          <h4>Share Your Details</h4>
+          <p>Tell us your birth details or your space — date, time, place, or a simple floor layout.</p>
+        </div>
+        <div class="step">
+          <div class="num"></div>
+          <h4>Ancient Knowledge + AI</h4>
+          <p>Our system reads classical Vedic texts through AI to compute charts and energies precisely.</p>
+        </div>
+        <div class="step">
+          <div class="num"></div>
+          <h4>Receive Clear Guidance</h4>
+          <p>A personalized report with practical insights, predictions, and recommended remedies.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <span class="tag">Connect With Us</span>
+          <h2>Begin your <em>reading</em> today</h2>
+          <p>Share what you're seeking and our team will reach out with the next steps. Every consultation is private and personalized.</p>
+          <div class="contact-line">
+            <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+            <a href="mailto:contact.us@taraveda.life">contact.us@taraveda.life</a>
+          </div>
+          <div class="contact-line">
+            <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <span class="t">Responses within 24–48 hours</span>
+          </div>
+          <div class="contact-line">
+            <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <span class="t">Serving seekers worldwide · Online consultations</span>
+          </div>
+        </div>
+
+        <form id="contactForm" class="reveal" action="https://formsubmit.co/contact.us@taraveda.life" method="POST">
+          <input type="hidden" name="_subject" value="New enquiry from Taraveda.life" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="text" name="_honey" style="display:none" />
+          <div class="row">
+            <div class="field">
+              <label for="name">Full Name</label>
+              <input id="name" type="text" name="Name" required placeholder="Your name" />
+            </div>
+            <div class="field">
+              <label for="email">Email Address</label>
+              <input id="email" type="email" name="Email" required placeholder="you@example.com" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="phone">Phone (optional)</label>
+              <input id="phone" type="tel" name="Phone" placeholder="+91 ..." />
+            </div>
+            <div class="field">
+              <label for="service">Service of Interest</label>
+              <select id="service" name="Service" required>
+                <option value="" disabled selected>Choose a service</option>
+                <option>Vedic Birth Chart</option>
+                <option>Personal Horoscope</option>
+                <option>Kundali Matching</option>
+                <option>Vaastu for Home</option>
+                <option>Vaastu for Business</option>
+                <option>Muhurta &amp; Remedies</option>
+                <option>Other / Not sure</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="message">Your Message</label>
+            <textarea id="message" name="Message" required placeholder="Share your birth details, your question, or what you're looking for..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold">Send Enquiry</button>
+          <p class="form-note">By submitting, you agree to our <button type="button" class="inline-legal" data-modal="m-privacy">Privacy Policy</button> and <button type="button" class="inline-legal" data-modal="m-disclaimer">Disclaimer</button>. For guidance purposes only.</p>
+          <div class="form-msg" id="formMsg"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DISCLAIMER STRIP ============ -->
+  <div class="disclaimer-strip">
+    <div class="wrap">
+      <p><strong>Disclaimer:</strong> Taraveda provides astrology and Vaastu services for guidance, self-reflection, and informational purposes only. Our content draws on traditional Vedic knowledge interpreted with the aid of artificial intelligence and is not based on scientific evidence. It is not a substitute for professional medical, legal, financial, psychological, or other advice, and we make no guarantee of accuracy or specific outcomes. You are solely responsible for any decisions you make. Services are intended for adults aged 18 and over.</p>
+    </div>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="wrap">
+      <a href="#home" class="brand">
+        <svg class="mark" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="21" stroke="#cfa64c" stroke-width="1.1" opacity=".6"/>
+          <path d="M24 10.5l3.5 9.9 10.2.2-8.2 6.2 3 10L24 30.6l-8.5 6 3-10-8.2-6.2 10.2-.2z" fill="#cfa64c"/>
+        </svg>
+        <span class="name">Tara<span>veda</span></span>
+      </a>
+      <p class="tagline">Ancient wisdom, illuminated by artificial intelligence.</p>
+      <div class="legal-links">
+        <button data-modal="m-disclaimer">Disclaimer</button><span class="sep">·</span>
+        <button data-modal="m-privacy">Privacy Policy</button><span class="sep">·</span>
+        <button data-modal="m-terms">Terms of Use</button>
+      </div>
+      <p class="fnote">© <span id="yr"></span> Taraveda · www.taraveda.life · All rights reserved</p>
+    </div>
+  </footer>
+
+  <!-- ============ LEGAL MODALS ============ -->
+  <div class="modal-overlay" id="m-disclaimer">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="t-disclaimer">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h3 id="t-disclaimer">Disclaimer</h3>
+      <p class="upd">Last updated: <span class="legal-date"></span></p>
+      <p>By accessing www.taraveda.life ("the Site") and using any service offered by Taraveda ("we", "us", "our"), you acknowledge and agree to the following.</p>
+      <h4>For Guidance Only</h4>
+      <p>All astrology readings, horoscopes, Kundali matching, Vaastu consultations, muhurta, remedies, and related content are provided for guidance, self-reflection, cultural interest, and informational purposes only. They are drawn from traditional Vedic knowledge and interpreted with the assistance of artificial intelligence.</p>
+      <h4>Not Scientifically Proven</h4>
+      <p>Astrology and Vaastu are traditional belief systems and are not recognised as scientific disciplines. Our content is not based on scientific evidence and should not be treated as fact.</p>
+      <h4>Not Professional Advice</h4>
+      <p>Nothing on the Site is a substitute for professional advice. For matters concerning your health, mental wellbeing, finances, legal affairs, relationships, or any major life decision, please consult a qualified professional. We are not medical, legal, financial, or psychological advisors.</p>
+      <h4>No Guarantees</h4>
+      <p>We make no representation or warranty regarding the accuracy, reliability, or outcome of any reading or recommendation. AI-generated content may contain errors or inaccuracies. Any action you take based on our content is strictly at your own discretion and risk, and you accept full responsibility for the consequences.</p>
+      <h4>Age Requirement</h4>
+      <p>Our services are intended only for individuals aged 18 years or older.</p>
+      <p class="legal-foot">Questions about this disclaimer? Email <a href="mailto:contact.us@taraveda.life">contact.us@taraveda.life</a>.</p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="m-privacy">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="t-privacy">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h3 id="t-privacy">Privacy Policy</h3>
+      <p class="upd">Last updated: <span class="legal-date"></span></p>
+      <p>Taraveda respects your privacy. This policy explains what information we collect through www.taraveda.life and how we use it.</p>
+      <h4>Information We Collect</h4>
+      <p>When you submit our enquiry form, we collect the details you provide, which may include your name, email address, phone number, chosen service, and any message or birth details you share (such as date, time, and place of birth). We collect this information only when you choose to provide it.</p>
+      <h4>How We Use Your Information</h4>
+      <ul>
+        <li>To respond to your enquiry and communicate with you.</li>
+        <li>To provide the astrology or Vaastu service you request.</li>
+        <li>To improve our services and respond to support requests.</li>
+      </ul>
+      <h4>How Your Data Is Handled</h4>
+      <p>Form submissions are delivered to our email through a third-party form-forwarding service. By submitting the form, your data is transmitted to and processed by that provider solely to deliver your message to us. We do not sell, rent, or trade your personal information to anyone.</p>
+      <h4>Data Retention &amp; Your Rights</h4>
+      <p>We retain your information only as long as needed to respond to you and provide our services. You may request access to, correction of, or deletion of your personal data at any time by emailing us. We will act on reasonable requests promptly.</p>
+      <h4>Cookies</h4>
+      <p>This Site uses minimal functionality and does not set tracking or advertising cookies. Fonts are loaded from a third-party provider, which may log standard request data such as your IP address.</p>
+      <h4>Security</h4>
+      <p>We take reasonable measures to protect your information, but no method of transmission over the internet is completely secure, and we cannot guarantee absolute security.</p>
+      <p class="legal-foot">To exercise your rights or ask questions, contact <a href="mailto:contact.us@taraveda.life">contact.us@taraveda.life</a>.</p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="m-terms">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="t-terms">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h3 id="t-terms">Terms of Use</h3>
+      <p class="upd">Last updated: <span class="legal-date"></span></p>
+      <p>These Terms govern your use of www.taraveda.life and the services provided by Taraveda. By using the Site, you agree to these Terms.</p>
+      <h4>Eligibility</h4>
+      <p>You must be at least 18 years old to use our services. By using the Site, you confirm that you meet this requirement.</p>
+      <h4>Use of Services</h4>
+      <p>Our services are offered for your personal, non-commercial use. You agree not to misuse the Site, attempt to disrupt it, or use it for any unlawful purpose. You agree to provide accurate information when contacting us.</p>
+      <h4>Nature of Services</h4>
+      <p>As detailed in our Disclaimer, all content is provided for guidance and informational purposes only, is not scientifically proven, and is not a substitute for professional advice. You use our services at your own discretion and risk.</p>
+      <h4>No Guarantee &amp; Limitation of Liability</h4>
+      <p>Services are provided "as is" without warranties of any kind. To the fullest extent permitted by law, Taraveda shall not be liable for any direct, indirect, incidental, or consequential loss or damage arising from your use of, or reliance on, the Site or its content.</p>
+      <h4>Intellectual Property</h4>
+      <p>All content, branding, text, and design on this Site are the property of Taraveda and may not be copied or reused without permission.</p>
+      <h4>Payments &amp; Refunds</h4>
+      <p>Where paid services are offered, terms, pricing, and any refund conditions will be communicated to you before purchase. Please contact us with any billing questions.</p>
+      <h4>Changes &amp; Governing Law</h4>
+      <p>We may update these Terms at any time; continued use of the Site constitutes acceptance of the updated Terms. These Terms are governed by the applicable laws of India, without regard to conflict-of-law principles.</p>
+      <p class="legal-foot">Questions about these Terms? Email <a href="mailto:contact.us@taraveda.life">contact.us@taraveda.life</a>.</p>
+    </div>
+  </div>
+
+  <script>
+    // ---------- multi-currency ----------
+    // Rates = foreign units per 1 INR (approximate, update as needed).
+    const CUR={
+      INR:{sym:'₹',    rate:1,        locale:'en-IN', approx:false},
+      USD:{sym:'$',    rate:0.0105,   locale:'en-US', approx:true},
+      EUR:{sym:'€',    rate:0.00904,  locale:'en-IE', approx:true},
+      GBP:{sym:'£',    rate:0.00783,  locale:'en-GB', approx:true},
+      AED:{sym:'AED ', rate:0.03928,  locale:'en-US', approx:true},
+      AUD:{sym:'A$',   rate:0.01467,  locale:'en-US', approx:true},
+      CAD:{sym:'C$',   rate:0.01439,  locale:'en-US', approx:true},
+      SGD:{sym:'S$',   rate:0.01355,  locale:'en-US', approx:true}
+    };
+    const curSelect=document.getElementById('currency');
+    const amts=document.querySelectorAll('.amt[data-inr]');
+    function renderPrices(code){
+      const c=CUR[code]||CUR.INR;
+      amts.forEach(el=>{
+        const inr=parseFloat(el.dataset.inr)||0;
+        const val=Math.round(inr*c.rate);
+        el.textContent=(c.approx?'~':'')+c.sym+val.toLocaleString(c.locale);
+      });
+    }
+    function setCurrency(code){
+      renderPrices(code);
+      try{localStorage.setItem('tv_currency',code);}catch(e){}
+    }
+    // restore previous choice
+    let saved='INR';
+    try{const s=localStorage.getItem('tv_currency');if(s&&CUR[s])saved=s;}catch(e){}
+    curSelect.value=saved;
+    renderPrices(saved);
+    curSelect.addEventListener('change',e=>setCurrency(e.target.value));
+
+    const menuBtn=document.getElementById('menuBtn'),nav=document.getElementById('nav');
+    menuBtn.addEventListener('click',()=>nav.classList.toggle('open'));
+    nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+
+    // year + legal dates
+    document.getElementById('yr').textContent=new Date().getFullYear();
+    const today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+    document.querySelectorAll('.legal-date').forEach(el=>el.textContent=today);
+
+    // legal modals
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.add('open');document.body.style.overflow='hidden';}}
+    function closeModals(){document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));document.body.style.overflow='';}
+    document.querySelectorAll('[data-modal]').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.modal)));
+    document.querySelectorAll('.modal-close').forEach(b=>b.addEventListener('click',closeModals));
+    document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeModals();}));
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModals();});
+
+    // scroll reveal
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+    },{threshold:.15});
+    document.querySelectorAll('.reveal,.grid').forEach(el=>io.observe(el));
+
+    // form submit via FormSubmit (AJAX, with native-submit fallback)
+    const form=document.getElementById('contactForm'),msg=document.getElementById('formMsg');
+    form.addEventListener('submit',async(e)=>{
+      e.preventDefault();
+      const btn=form.querySelector('button[type=submit]');const original=btn.textContent;
+      const restore=()=>{btn.textContent=original;btn.disabled=false;};
+      btn.textContent='Sending…';btn.disabled=true;msg.className='form-msg';msg.textContent='';
+
+      // The AJAX call only works when the page is served over http(s). When opened
+      // as a local file:// (or if fetch is blocked), do a normal full-page POST instead —
+      // a navigation isn't subject to CORS, so it still reaches FormSubmit.
+      const nativeSubmit=()=>{restore();HTMLFormElement.prototype.submit.call(form);};
+      if(location.protocol==='file:'){nativeSubmit();return;}
+
+      try{
+        const res=await fetch('https://formsubmit.co/ajax/contact.us@taraveda.life',{
+          method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+          body:JSON.stringify(Object.fromEntries(new FormData(form)))
+        });
+        const data=await res.json().catch(()=>({}));
+        const ok=res.ok&&(data.success===true||data.success==='true');
+        if(ok){
+          msg.className='form-msg ok';
+          msg.textContent='🙏 Thank you. Your enquiry has been sent — we will reach out soon.';
+          form.reset();restore();
+        }else{
+          msg.className='form-msg err';
+          const detail=data.message?(' ('+data.message+')'):'';
+          msg.innerHTML='We could not send your enquiry'+detail+'. Please email us directly at <a href="mailto:contact.us@taraveda.life" style="color:#9c2c1c;font-weight:500">contact.us@taraveda.life</a>.';
+          restore();
+        }
+      }catch(err){
+        // Request blocked before reaching the server (CORS / offline / extension) — try a normal submit.
+        nativeSubmit();
+      }
+    });
+  </script>
+</body>
+</html>
