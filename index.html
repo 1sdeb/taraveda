@@ -217,6 +217,42 @@
   .step h4{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:500;margin-bottom:10px;color:#f7eedd}
   .step p{color:#cbbaa3;font-size:.96rem;font-weight:300}
 
+  /* ---------- testimonials ---------- */
+  .t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .t-card{position:relative;display:flex;flex-direction:column;
+    padding:40px 34px 32px;border:1px solid var(--cream-line);border-radius:4px;
+    background:linear-gradient(165deg,var(--cream),#fbf4e6);
+    box-shadow:0 18px 44px -28px rgba(70,45,15,.4);
+    transition:transform .45s,box-shadow .45s,border-color .45s}
+  .t-card:hover{transform:translateY(-8px);box-shadow:0 30px 56px -28px rgba(70,45,15,.5);border-color:var(--gold)}
+  .t-card .quote-mark{position:absolute;top:22px;right:26px;width:46px;height:46px;
+    color:var(--gold);opacity:.16;pointer-events:none}
+  .t-card .stars{display:flex;gap:4px;margin-bottom:18px;color:var(--gold)}
+  .t-card .stars svg{width:18px;height:18px}
+  .t-card blockquote{font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.22rem;line-height:1.6;color:var(--ink);font-weight:400;
+    margin:0 0 26px;flex:1}
+  .t-card figcaption{display:flex;align-items:center;gap:14px;
+    padding-top:20px;border-top:1px solid var(--line)}
+  .t-avatar{width:48px;height:48px;border-radius:50%;flex:none;display:grid;place-items:center;
+    font-family:'Cinzel',serif;font-size:.86rem;letter-spacing:.04em;color:var(--gold-soft);
+    border:1px solid var(--gold);
+    background:radial-gradient(circle at 50% 40%,rgba(177,138,59,.14),transparent 72%)}
+  .t-who{display:flex;flex-direction:column}
+  .t-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--ink);line-height:1.2}
+  .t-meta{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);margin-top:5px}
+  /* staggered reveal for testimonial cards */
+  .t-grid .t-card{opacity:0;transform:translateY(28px);
+    transition:transform .45s,box-shadow .45s,border-color .45s,opacity .9s,filter .9s}
+  .t-grid.in .t-card{opacity:1;transform:none}
+  .t-grid.in .t-card:nth-child(1){transition-delay:0s}
+  .t-grid.in .t-card:nth-child(2){transition-delay:.08s}
+  .t-grid.in .t-card:nth-child(3){transition-delay:.16s}
+  .t-grid.in .t-card:nth-child(4){transition-delay:.24s}
+  .t-grid.in .t-card:nth-child(5){transition-delay:.32s}
+  .t-grid.in .t-card:nth-child(6){transition-delay:.4s}
+
   /* ---------- contact ---------- */
   .contact-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:60px;align-items:start}
   .contact-info .tag{font-family:'Cinzel',serif;letter-spacing:.4em;font-size:.7rem;color:var(--gold-soft);text-transform:uppercase}
@@ -327,7 +363,7 @@
   .grid.in .card:nth-child(6){transition-delay:.4s}
 
   /* ---------- responsive ---------- */
-  @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}.t-grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:860px){
     nav{height:74px}
     .navlinks{position:fixed;inset:74px 0 auto;flex-direction:column;gap:0;
@@ -347,6 +383,7 @@
   @media(max-width:620px){
     .wrap{padding:0 22px}
     .grid{grid-template-columns:1fr;gap:20px}
+    .t-grid{grid-template-columns:1fr;gap:20px}
     .card{padding:34px 28px}
     .sec-head{margin-bottom:42px}
     section{padding:72px 0}
@@ -377,7 +414,7 @@
   }
   @media(prefers-reduced-motion:reduce){
     .stars,.wheel{animation:none}
-    .reveal,.grid:not(.in) .card{opacity:1;transform:none}
+    .reveal,.grid:not(.in) .card,.t-grid:not(.in) .t-card{opacity:1;transform:none}
     *{scroll-behavior:auto}
   }
 </style>
@@ -403,6 +440,7 @@
         <div class="navlinks" id="nav">
           <a href="#services">Services</a>
           <a href="#approach">Our Approach</a>
+          <a href="#testimonials">Testimonials</a>
           <a href="#contact">Contact</a>
           <a href="#contact" class="cta">Get a Reading</a>
         </div>
@@ -563,6 +601,143 @@
           <h4>Receive Clear Guidance</h4>
           <p>A personalized report with practical insights, predictions, and recommended remedies.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section id="testimonials">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="tag">Voices of Trust</span>
+        <h2>Seekers who found <em>clarity</em></h2>
+        <p>Across India and around the world, our blend of classical Vedic wisdom and AI precision has guided people through life's most important questions.</p>
+        <svg class="flr" viewBox="0 0 172 16" fill="none" aria-hidden="true" style="margin-top:22px">
+          <circle cx="8" cy="8" r="1.7" fill="currentColor"/>
+          <line x1="15" y1="8" x2="68" y2="8" stroke="currentColor" stroke-width="1"/>
+          <path d="M86 2l7 6-7 6-7-6z" stroke="currentColor" stroke-width="1"/>
+          <circle cx="86" cy="8" r="2" fill="currentColor"/>
+          <line x1="104" y1="8" x2="157" y2="8" stroke="currentColor" stroke-width="1"/>
+          <circle cx="164" cy="8" r="1.7" fill="currentColor"/>
+        </svg>
+      </div>
+
+      <div class="t-grid">
+
+        <figure class="t-card">
+          <svg class="quote-mark" viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M0 24c0-8.8 5.6-15.4 14-19l2.4 4.6C11 12 8 15.6 8 20h6v16H0V24zm22 0c0-8.8 5.6-15.4 14-19l2.4 4.6C33 12 30 15.6 30 20h6v16H22V24z"/></svg>
+          <div class="stars" aria-label="Rated 5 out of 5">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+          </div>
+          <blockquote>My Janma Kundali read like someone had truly understood my life. The dasha timeline explained patterns I had wondered about for years — detailed, warm, and remarkably accurate.</blockquote>
+          <figcaption>
+            <span class="t-avatar">AS</span>
+            <span class="t-who">
+              <span class="t-name">Ananya Sharma</span>
+              <span class="t-meta">Vedic Birth Chart · Mumbai</span>
+            </span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <svg class="quote-mark" viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M0 24c0-8.8 5.6-15.4 14-19l2.4 4.6C11 12 8 15.6 8 20h6v16H0V24zm22 0c0-8.8 5.6-15.4 14-19l2.4 4.6C33 12 30 15.6 30 20h6v16H22V24z"/></svg>
+          <div class="stars" aria-label="Rated 5 out of 5">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+          </div>
+          <blockquote>We reorganised our home following the Vaastu mapping and the difference in atmosphere is real. The directional guidance was practical and easy to act on, not vague at all.</blockquote>
+          <figcaption>
+            <span class="t-avatar">RI</span>
+            <span class="t-who">
+              <span class="t-name">Rajesh &amp; Priya Iyer</span>
+              <span class="t-meta">Vaastu for Home · Bengaluru</span>
+            </span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <svg class="quote-mark" viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M0 24c0-8.8 5.6-15.4 14-19l2.4 4.6C11 12 8 15.6 8 20h6v16H0V24zm22 0c0-8.8 5.6-15.4 14-19l2.4 4.6C33 12 30 15.6 30 20h6v16H22V24z"/></svg>
+          <div class="stars" aria-label="Rated 5 out of 5">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+          </div>
+          <blockquote>The Guna Milan report for our marriage was thorough and balanced. It highlighted genuine strengths and gentle remedies rather than fear — exactly the reassurance our families needed.</blockquote>
+          <figcaption>
+            <span class="t-avatar">MN</span>
+            <span class="t-who">
+              <span class="t-name">Meera Nair</span>
+              <span class="t-meta">Kundali Matching · Dubai</span>
+            </span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <svg class="quote-mark" viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M0 24c0-8.8 5.6-15.4 14-19l2.4 4.6C11 12 8 15.6 8 20h6v16H0V24zm22 0c0-8.8 5.6-15.4 14-19l2.4 4.6C33 12 30 15.6 30 20h6v16H22V24z"/></svg>
+          <div class="stars" aria-label="Rated 5 out of 5">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+          </div>
+          <blockquote>I was sceptical about astrology online, but the monthly horoscope tuned to my moon sign has been uncannily on point. Thoughtful, grounded, and never pushy.</blockquote>
+          <figcaption>
+            <span class="t-avatar">DW</span>
+            <span class="t-who">
+              <span class="t-name">Daniel Whitmore</span>
+              <span class="t-meta">Personal Horoscope · London</span>
+            </span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <svg class="quote-mark" viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M0 24c0-8.8 5.6-15.4 14-19l2.4 4.6C11 12 8 15.6 8 20h6v16H0V24zm22 0c0-8.8 5.6-15.4 14-19l2.4 4.6C33 12 30 15.6 30 20h6v16H22V24z"/></svg>
+          <div class="stars" aria-label="Rated 5 out of 5">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+          </div>
+          <blockquote>We applied the Vaastu recommendations to our new office layout before opening. The space feels calmer and our team has noticed it too. Professional from start to finish.</blockquote>
+          <figcaption>
+            <span class="t-avatar">VD</span>
+            <span class="t-who">
+              <span class="t-name">Vikram Desai</span>
+              <span class="t-meta">Vaastu for Business · Pune</span>
+            </span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <svg class="quote-mark" viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M0 24c0-8.8 5.6-15.4 14-19l2.4 4.6C11 12 8 15.6 8 20h6v16H0V24zm22 0c0-8.8 5.6-15.4 14-19l2.4 4.6C33 12 30 15.6 30 20h6v16H22V24z"/></svg>
+          <div class="stars" aria-label="Rated 5 out of 5">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.95 6.6 7.05.6-5.3 4.7 1.6 7-6.3-3.8-6.3 3.8 1.6-7L2 9.2l7.05-.6z"/></svg>
+          </div>
+          <blockquote>The muhurta they chose for our housewarming, along with the simple mantra and gemstone guidance, gave the whole occasion a sense of meaning. Respectful of tradition and beautifully explained.</blockquote>
+          <figcaption>
+            <span class="t-avatar">LR</span>
+            <span class="t-who">
+              <span class="t-name">Lakshmi Reddy</span>
+              <span class="t-meta">Muhurta &amp; Remedies · Hyderabad</span>
+            </span>
+          </figcaption>
+        </figure>
+
       </div>
     </div>
   </section>
@@ -788,7 +963,7 @@
     const io=new IntersectionObserver((entries)=>{
       entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
     },{threshold:.15});
-    document.querySelectorAll('.reveal,.grid').forEach(el=>io.observe(el));
+    document.querySelectorAll('.reveal,.grid,.t-grid').forEach(el=>io.observe(el));
 
     // form submit via FormSubmit (AJAX, with native-submit fallback)
     const form=document.getElementById('contactForm'),msg=document.getElementById('formMsg');
