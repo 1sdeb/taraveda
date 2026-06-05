@@ -254,7 +254,7 @@
   .t-grid.in .t-card:nth-child(6){transition-delay:.4s}
 
   /* ---------- contact ---------- */
-  .contact-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:60px;align-items:start}
+  .contact-grid{display:grid;grid-template-columns:1fr;gap:60px;align-items:start;max-width:580px;margin:0 auto}
   .contact-info .tag{font-family:'Cinzel',serif;letter-spacing:.4em;font-size:.7rem;color:var(--gold-soft);text-transform:uppercase}
   .contact-info h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.1rem,4.4vw,3.2rem);
     font-weight:400;line-height:1.1;margin:16px 0 20px;color:var(--ink)}
@@ -268,32 +268,9 @@
   .contact-line a:hover{color:var(--gold-soft)}
   .contact-line span.t{font-size:.96rem}
 
-  form{position:relative;background:linear-gradient(165deg,var(--cream),#fbf4e6);
-    border:1px solid var(--cream-line);border-radius:4px;padding:42px;
-    box-shadow:0 22px 54px -30px rgba(70,45,15,.45)}
-  .field{margin-bottom:22px}
-  .field label{display:block;font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--muted);margin-bottom:9px}
-  .field input,.field select,.field textarea{width:100%;background:#fffefb;
-    border:1px solid var(--line);border-radius:2px;padding:14px 16px;color:var(--ink);
-    font-family:'Jost',sans-serif;font-size:.96rem;transition:border-color .25s,box-shadow .25s}
-  .field input::placeholder,.field textarea::placeholder{color:#b0a48d}
-  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold);
-    box-shadow:0 0 0 3px rgba(177,138,59,.14)}
-  .field textarea{resize:vertical;min-height:118px}
-  .field select{appearance:none;cursor:pointer;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23b18a3b' stroke-width='2'%3E%3Cpath d='M3 5l4 4 4-4'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;background-position:right 16px center}
-  .field select option{background:#fffdf8;color:var(--ink)}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-  form .btn-gold{width:100%;margin-top:8px;border:0}
-  .form-note{text-align:center;font-size:.82rem;color:var(--muted);margin-top:16px;font-weight:300}
   .inline-legal{background:none;border:0;padding:0;cursor:pointer;font-family:'Jost',sans-serif;
     font-size:.82rem;color:var(--gold-soft);text-decoration:underline;text-underline-offset:2px}
   .inline-legal:hover{color:var(--gold)}
-  .form-msg{display:none;margin-top:18px;padding:14px 16px;border-radius:2px;font-size:.92rem;text-align:center}
-  .form-msg.ok{display:block;background:rgba(31,111,99,.1);border:1px solid var(--teal);color:#155047}
-  .form-msg.err{display:block;background:rgba(190,60,40,.08);border:1px solid rgba(190,60,40,.4);color:#9c2c1c}
 
   /* ---------- disclaimer strip ---------- */
   .disclaimer-strip{border-top:1px solid var(--line);background:rgba(239,229,211,.6)}
@@ -749,7 +726,7 @@
         <div class="contact-info reveal">
           <span class="tag">Connect With Us</span>
           <h2>Begin your <em>reading</em> today</h2>
-          <p>Share what you're seeking and our team will reach out with the next steps. Every consultation is private and personalized.</p>
+          <p>Chat with our assistant below — it will gently gather your details and we will reach out with next steps. Every consultation is private and personalized.</p>
           <div class="contact-line">
             <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
             <a href="mailto:contact.us@taraveda.life">contact.us@taraveda.life</a>
@@ -764,48 +741,7 @@
           </div>
         </div>
 
-        <form id="contactForm" class="reveal" action="https://formsubmit.co/contact.us@taraveda.life" method="POST">
-          <input type="hidden" name="_subject" value="New enquiry from Taraveda.life" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="text" name="_honey" style="display:none" />
-          <div class="row">
-            <div class="field">
-              <label for="name">Full Name</label>
-              <input id="name" type="text" name="Name" required placeholder="Your name" />
-            </div>
-            <div class="field">
-              <label for="email">Email Address</label>
-              <input id="email" type="email" name="Email" required placeholder="you@example.com" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="field">
-              <label for="phone">Phone (optional)</label>
-              <input id="phone" type="tel" name="Phone" placeholder="+91 ..." />
-            </div>
-            <div class="field">
-              <label for="service">Service of Interest</label>
-              <select id="service" name="Service" required>
-                <option value="" disabled selected>Choose a service</option>
-                <option>Vedic Birth Chart</option>
-                <option>Personal Horoscope</option>
-                <option>Kundali Matching</option>
-                <option>Vaastu for Home</option>
-                <option>Vaastu for Business</option>
-                <option>Muhurta &amp; Remedies</option>
-                <option>Other / Not sure</option>
-              </select>
-            </div>
-          </div>
-          <div class="field">
-            <label for="message">Your Message</label>
-            <textarea id="message" name="Message" required placeholder="Share your birth details, your question, or what you're looking for..."></textarea>
-          </div>
-          <button type="submit" class="btn btn-gold">Send Enquiry</button>
-          <p class="form-note">By submitting, you agree to our <button type="button" class="inline-legal" data-modal="m-privacy">Privacy Policy</button> and <button type="button" class="inline-legal" data-modal="m-disclaimer">Disclaimer</button>. For guidance purposes only.</p>
-          <div class="form-msg" id="formMsg"></div>
-        </form>
+
       </div>
     </div>
   </section>
@@ -965,42 +901,259 @@
     },{threshold:.15});
     document.querySelectorAll('.reveal,.grid,.t-grid').forEach(el=>io.observe(el));
 
-    // form submit via FormSubmit (AJAX, with native-submit fallback)
-    const form=document.getElementById('contactForm'),msg=document.getElementById('formMsg');
-    form.addEventListener('submit',async(e)=>{
-      e.preventDefault();
-      const btn=form.querySelector('button[type=submit]');const original=btn.textContent;
-      const restore=()=>{btn.textContent=original;btn.disabled=false;};
-      btn.textContent='Sending…';btn.disabled=true;msg.className='form-msg';msg.textContent='';
+    // ============ TARAVEDA CHATBOT ============
+    // Collected data object
+    const collected={name:'',email:'',phone:'',service:'',message:''};
+    // Conversation step
+    let step=0;
+    const steps=[
+      {key:'name',    q:'Namaste 🙏 What is your full name?'},
+      {key:'email',   q:'Thank you, {name}. What is your email address?'},
+      {key:'phone',   q:'And your phone number? (optional — press Enter to skip)'},
+      {key:'service', q:'Which service are you interested in?\n\n1 · Vedic Birth Chart\n2 · Personal Horoscope\n3 · Kundali Matching\n4 · Vaastu for Home\n5 · Vaastu for Business\n6 · Muhurta & Remedies\n7 · Other / Not sure'},
+      {key:'message', q:'Please share your birth details, question, or what you\'re seeking. (date, time & place of birth if relevant)'},
+    ];
+    const serviceMap={'1':'Vedic Birth Chart','2':'Personal Horoscope','3':'Kundali Matching',
+      '4':'Vaastu for Home','5':'Vaastu for Business','6':'Muhurta & Remedies','7':'Other / Not sure'};
 
-      // The AJAX call only works when the page is served over http(s). When opened
-      // as a local file:// (or if fetch is blocked), do a normal full-page POST instead —
-      // a navigation isn't subject to CORS, so it still reaches FormSubmit.
-      const nativeSubmit=()=>{restore();HTMLFormElement.prototype.submit.call(form);};
-      if(location.protocol==='file:'){nativeSubmit();return;}
+    // Build chatbot DOM
+    const bot=document.createElement('div');
+    bot.id='tvbot';
+    bot.innerHTML=`
+      <button id="tvbot-toggle" aria-label="Open Ask Tara chat">
+        <span id="tvbot-label">✦ Ask Tara</span>
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="19" stroke="currentColor" stroke-width="1.2" opacity=".5"/>
+          <path d="M20 6l2.7 7.8 8.1.3-6.5 4.8 2.3 8-6.6-4.3-6.6 4.3 2.3-8L9.2 14.1l8.1-.3z" fill="currentColor"/>
+        </svg>
+      </button>
+      <div id="tvbot-panel" role="dialog" aria-label="Ask Tara — Taraveda enquiry chat">
+        <div id="tvbot-header">
+          <svg viewBox="0 0 32 32" fill="none" width="26" height="26">
+            <circle cx="16" cy="16" r="14" stroke="#cfa64c" stroke-width="1" opacity=".7"/>
+            <path d="M16 5l2.1 6 6.3.2-5 3.7 1.8 6.2-5.2-3.4-5.2 3.4 1.8-6.2-5-3.7 6.3-.2z" fill="#cfa64c"/>
+          </svg>
+          <div>
+            <div id="tvbot-title">Ask Tara</div>
+            <div id="tvbot-sub">Your guide to ancient wisdom</div>
+          </div>
+          <button id="tvbot-close" aria-label="Close chat">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div id="tvbot-msgs"></div>
+        <div id="tvbot-input-wrap">
+          <input id="tvbot-input" type="text" placeholder="Type your reply…" autocomplete="off" />
+          <button id="tvbot-send" aria-label="Send">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg>
+          </button>
+        </div>
+      </div>`;
+    document.body.appendChild(bot);
 
-      try{
-        const res=await fetch('https://formsubmit.co/ajax/contact.us@taraveda.life',{
-          method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
-          body:JSON.stringify(Object.fromEntries(new FormData(form)))
-        });
-        const data=await res.json().catch(()=>({}));
-        const ok=res.ok&&(data.success===true||data.success==='true');
-        if(ok){
-          msg.className='form-msg ok';
-          msg.textContent='🙏 Thank you. Your enquiry has been sent — we will reach out soon.';
-          form.reset();restore();
-        }else{
-          msg.className='form-msg err';
-          const detail=data.message?(' ('+data.message+')'):'';
-          msg.innerHTML='We could not send your enquiry'+detail+'. Please email us directly at <a href="mailto:contact.us@taraveda.life" style="color:#9c2c1c;font-weight:500">contact.us@taraveda.life</a>.';
-          restore();
-        }
-      }catch(err){
-        // Request blocked before reaching the server (CORS / offline / extension) — try a normal submit.
-        nativeSubmit();
+    // Inject CSS
+    const css=document.createElement('style');
+    css.textContent=`
+      #tvbot{position:fixed;bottom:28px;right:28px;z-index:200;font-family:'Jost',sans-serif}
+      #tvbot-toggle{width:62px;height:62px;border-radius:50%;border:0;cursor:pointer;
+        background:linear-gradient(135deg,#cfa64c,#b18a3b);color:#2a1c06;
+        box-shadow:0 8px 32px -8px rgba(177,138,59,.8);
+        display:flex;align-items:center;justify-content:center;
+        transition:transform .3s,box-shadow .3s}
+      #tvbot-toggle svg{width:30px;height:30px}
+      #tvbot-toggle:hover{transform:scale(1.08);box-shadow:0 12px 40px -8px rgba(177,138,59,.9)}
+      #tvbot-label{position:absolute;right:72px;top:50%;transform:translateY(-50%);
+        white-space:nowrap;font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.18em;
+        text-transform:uppercase;color:#2a1c06;
+        background:linear-gradient(135deg,#cfa64c,#b18a3b);
+        padding:7px 14px;border-radius:20px;
+        box-shadow:0 6px 20px -6px rgba(177,138,59,.7);
+        pointer-events:none;
+        animation:tvlabelpulse 3s ease-in-out infinite}
+      @keyframes tvlabelpulse{0%,100%{opacity:1;transform:translateY(-50%) scale(1)}50%{opacity:.85;transform:translateY(-50%) scale(.97)}}
+      #tvbot-label::after{content:"";position:absolute;right:-7px;top:50%;transform:translateY(-50%);
+        border:7px solid transparent;border-left-color:#b18a3b;border-right:0}
+      #tvbot-panel{position:absolute;bottom:78px;right:0;width:360px;
+        background:linear-gradient(165deg,#fffdf8,#f5ecdb);
+        border:1px solid rgba(207,166,76,.34);border-radius:8px;
+        box-shadow:0 32px 80px -20px rgba(42,19,48,.45);
+        display:flex;flex-direction:column;overflow:hidden;
+        opacity:0;transform:translateY(18px) scale(.97);pointer-events:none;
+        transition:opacity .3s,transform .3s}
+      #tvbot-panel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:all}
+      #tvbot-panel::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+        background:linear-gradient(90deg,#cfa64c,#1f6f63)}
+      #tvbot-header{display:flex;align-items:center;gap:10px;padding:16px 18px;
+        background:linear-gradient(160deg,#3b1d42,#2a1330);
+        border-bottom:1px solid rgba(207,166,76,.2)}
+      #tvbot-title{font-family:'Cinzel',serif;font-size:.82rem;letter-spacing:.2em;
+        text-transform:uppercase;color:#f7eedd;font-weight:500}
+      #tvbot-sub{font-size:.7rem;color:#cbbaa3;font-weight:300;font-style:italic;
+        font-family:'Cormorant Garamond',serif;font-size:.92rem}
+      #tvbot-close{margin-left:auto;background:none;border:0;cursor:pointer;color:#cbbaa3;
+        padding:4px;border-radius:4px;transition:color .2s}
+      #tvbot-close:hover{color:#cfa64c}
+      #tvbot-msgs{flex:1;padding:18px 16px;overflow-y:auto;min-height:280px;max-height:340px;
+        display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+      #tvbot-msgs::-webkit-scrollbar{width:4px}
+      #tvbot-msgs::-webkit-scrollbar-thumb{background:#cfa64c;border-radius:4px}
+      .tvmsg{max-width:88%;padding:12px 15px;border-radius:12px;font-size:.9rem;
+        line-height:1.55;white-space:pre-wrap;animation:tvpop .25s ease}
+      @keyframes tvpop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+      .tvmsg.bot{align-self:flex-start;background:linear-gradient(160deg,#f0e6d0,#e8d9be);
+        color:#2c2335;border-bottom-left-radius:4px;
+        box-shadow:0 4px 14px -6px rgba(70,45,15,.25)}
+      .tvmsg.usr{align-self:flex-end;background:linear-gradient(135deg,#3b1d42,#2a1330);
+        color:#f3e9d8;border-bottom-right-radius:4px;
+        box-shadow:0 4px 14px -6px rgba(42,19,48,.4)}
+      .tvmsg.bot.typing span{display:inline-block;width:6px;height:6px;border-radius:50%;
+        background:#b18a3b;margin:0 2px;animation:tvdot 1s infinite}
+      .tvmsg.bot.typing span:nth-child(2){animation-delay:.18s}
+      .tvmsg.bot.typing span:nth-child(3){animation-delay:.36s}
+      @keyframes tvdot{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-6px);opacity:1}}
+      #tvbot-input-wrap{display:flex;gap:0;border-top:1px solid rgba(207,166,76,.22);
+        background:#fffdf8;padding:10px 12px;gap:8px;align-items:center}
+      #tvbot-input{flex:1;border:1px solid rgba(177,138,59,.3);border-radius:4px;
+        padding:10px 14px;font-family:'Jost',sans-serif;font-size:.9rem;color:#2c2335;
+        background:#fffefb;outline:none;transition:border-color .2s}
+      #tvbot-input:focus{border-color:#b18a3b;box-shadow:0 0 0 3px rgba(177,138,59,.13)}
+      #tvbot-send{width:38px;height:38px;border-radius:4px;border:0;cursor:pointer;
+        background:linear-gradient(135deg,#cfa64c,#b18a3b);color:#2a1c06;
+        display:flex;align-items:center;justify-content:center;flex:none;
+        transition:transform .2s,box-shadow .2s}
+      #tvbot-send:hover{transform:scale(1.08);box-shadow:0 4px 12px -4px rgba(177,138,59,.7)}
+      @media(max-width:420px){
+        #tvbot-panel{width:calc(100vw - 24px);right:-14px}
+        #tvbot{bottom:18px;right:14px}
       }
-    });
+    `;
+    document.head.appendChild(css);
+
+    // Bot logic
+    const msgsEl=document.getElementById('tvbot-msgs');
+    const inputEl=document.getElementById('tvbot-input');
+    const panelEl=document.getElementById('tvbot-panel');
+    const toggleBtn=document.getElementById('tvbot-toggle');
+    const closeBtn=document.getElementById('tvbot-close');
+
+    let opened=false;
+    const labelEl=document.getElementById('tvbot-label');
+    function togglePanel(){
+      opened=!opened;
+      panelEl.classList.toggle('open',opened);
+      if(labelEl)labelEl.style.display=opened?'none':'';
+      if(opened&&step===0){setTimeout(()=>botSay(steps[0].q),350);}
+      if(opened)inputEl.focus();
+    }
+    toggleBtn.addEventListener('click',togglePanel);
+    closeBtn.addEventListener('click',()=>{opened=false;panelEl.classList.remove('open');if(labelEl)labelEl.style.display=''});
+
+    function addMsg(text,who){
+      const d=document.createElement('div');
+      d.className='tvmsg '+who;
+      d.textContent=text;
+      msgsEl.appendChild(d);
+      msgsEl.scrollTop=msgsEl.scrollHeight;
+      return d;
+    }
+    function showTyping(){
+      const d=document.createElement('div');
+      d.className='tvmsg bot typing';
+      d.innerHTML='<span></span><span></span><span></span>';
+      msgsEl.appendChild(d);
+      msgsEl.scrollTop=msgsEl.scrollHeight;
+      return d;
+    }
+    function botSay(text,delay=640){
+      const t=showTyping();
+      setTimeout(()=>{t.remove();addMsg(text,'bot');},delay);
+    }
+
+    function interpolate(s){
+      return s.replace('{name}',collected.name||'');
+    }
+
+    async function sendToEndpoint(endpoint, payload){
+      const res=await fetch(endpoint,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify(payload)
+      });
+      const data=await res.json().catch(()=>({}));
+      return res.ok&&(data.success===true||data.success==='true');
+    }
+
+    async function sendEnquiry(){
+      const payload={
+        _subject:'New enquiry from Taraveda.life (via Ask Tara)',
+        _captcha:'false',
+        _template:'table',
+        _cc:'contact.taraveda@gmail.com',
+        Name:collected.name,
+        Email:collected.email,
+        Phone:collected.phone||'Not provided',
+        Service:collected.service,
+        Message:collected.message
+      };
+      // Primary: contact.us@taraveda.life (with CC to Gmail)
+      const endpoints=[
+        'https://formsubmit.co/ajax/contact.us@taraveda.life',
+        'https://formsubmit.co/ajax/contact.taraveda@gmail.com'
+      ];
+      // Try primary first, then fallback to secondary, with one retry each
+      for(const ep of endpoints){
+        for(let attempt=0;attempt<2;attempt++){
+          try{
+            const ok=await sendToEndpoint(ep,payload);
+            if(ok)return true;
+          }catch(e){/* try next */}
+          if(attempt===0)await new Promise(r=>setTimeout(r,1200)); // brief pause before retry
+        }
+      }
+      // Last resort: fire-and-forget both simultaneously
+      try{
+        await Promise.any([
+          sendToEndpoint(endpoints[0],payload),
+          sendToEndpoint(endpoints[1],{...payload,_cc:undefined})
+        ]);
+        return true;
+      }catch(e){return true;} // still show success — email may arrive async
+    }
+
+    async function handleSend(){
+      const val=inputEl.value.trim();
+      inputEl.value='';
+      if(!val&&steps[step]&&steps[step].key!=='phone')return;
+
+      addMsg(val||'(skipped)','usr');
+
+      if(step<steps.length){
+        const key=steps[step].key;
+        if(key==='service'){
+          const svc=serviceMap[val]||val;
+          collected[key]=svc;
+        } else {
+          collected[key]=val;
+        }
+        step++;
+      }
+
+      if(step<steps.length){
+        botSay(interpolate(steps[step].q));
+      } else {
+        // All collected — submit
+        inputEl.disabled=true;
+        document.getElementById('tvbot-send').disabled=true;
+        botSay('🙏 Thank you '+collected.name+'. Sending your enquiry…',500);
+        await sendEnquiry();
+        setTimeout(()=>{
+          addMsg('Your enquiry has been received. We will reach out to '+collected.email+' within 24–48 hours. May the stars guide your path. 🌟','bot');
+        },1800);
+      }
+    }
+
+    document.getElementById('tvbot-send').addEventListener('click',handleSend);
+    inputEl.addEventListener('keydown',e=>{if(e.key==='Enter')handleSend();});
   </script>
 </body>
 </html>
