@@ -1196,6 +1196,20 @@
         await sendEnquiry();
         setTimeout(()=>{
           addMsg('Your enquiry has been received. We will reach out to '+collected.email+' within 24–48 hours. May the stars guide your path. 🌟','bot');
+          // Reset chat after a short pause so user can read the confirmation
+          setTimeout(()=>{
+            // Clear messages
+            msgsEl.innerHTML='';
+            // Reset collected data
+            Object.keys(collected).forEach(k=>collected[k]='');
+            // Reset step counter
+            step=0;
+            // Re-enable input
+            inputEl.disabled=false;
+            document.getElementById('tvbot-send').disabled=false;
+            // Close panel
+            closePanel();
+          },4000);
         },1800);
       }
     }
