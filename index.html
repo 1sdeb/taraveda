@@ -902,6 +902,19 @@
     document.querySelectorAll('.reveal,.grid,.t-grid').forEach(el=>io.observe(el));
 
     // ============ TARAVEDA CHATBOT ============
+    // EmailJS config
+    const EMAILJS_SERVICE  = 'service_u77tmim';
+    const EMAILJS_TEMPLATE = 'template_qckxbd1';
+    const EMAILJS_CONFIRM  = 'template_3xpmq98';
+    const EMAILJS_KEY      = 'Lg5dRPfqTpbg1Iagp';
+
+    // Load EmailJS SDK
+    (function(){
+      const s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+      s.onload=()=>emailjs.init({publicKey:EMAILJS_KEY});
+      document.head.appendChild(s);
+    })();
     // Collected data object
     const collected={name:'',email:'',phone:'',service:'',message:''};
     // Conversation step
@@ -954,12 +967,13 @@
     // Inject CSS
     const css=document.createElement('style');
     css.textContent=`
-      #tvbot{position:fixed;bottom:28px;right:28px;z-index:200;font-family:'Jost',sans-serif}
+      #tvbot{position:fixed;bottom:24px;right:24px;z-index:200;font-family:'Jost',sans-serif}
       #tvbot-toggle{width:62px;height:62px;border-radius:50%;border:0;cursor:pointer;
         background:linear-gradient(135deg,#cfa64c,#b18a3b);color:#2a1c06;
         box-shadow:0 8px 32px -8px rgba(177,138,59,.8);
         display:flex;align-items:center;justify-content:center;
-        transition:transform .3s,box-shadow .3s}
+        transition:transform .3s,box-shadow .3s;-webkit-tap-highlight-color:transparent;
+        touch-action:manipulation}
       #tvbot-toggle svg{width:30px;height:30px}
       #tvbot-toggle:hover{transform:scale(1.08);box-shadow:0 12px 40px -8px rgba(177,138,59,.9)}
       #tvbot-label{position:absolute;right:72px;top:50%;transform:translateY(-50%);
@@ -973,32 +987,41 @@
       @keyframes tvlabelpulse{0%,100%{opacity:1;transform:translateY(-50%) scale(1)}50%{opacity:.85;transform:translateY(-50%) scale(.97)}}
       #tvbot-label::after{content:"";position:absolute;right:-7px;top:50%;transform:translateY(-50%);
         border:7px solid transparent;border-left-color:#b18a3b;border-right:0}
-      #tvbot-panel{position:absolute;bottom:78px;right:0;width:360px;
+
+      /* ── Panel: desktop ── */
+      #tvbot-panel{position:absolute;bottom:78px;right:0;width:370px;
         background:linear-gradient(165deg,#fffdf8,#f5ecdb);
-        border:1px solid rgba(207,166,76,.34);border-radius:8px;
+        border:1px solid rgba(207,166,76,.34);border-radius:12px;
         box-shadow:0 32px 80px -20px rgba(42,19,48,.45);
         display:flex;flex-direction:column;overflow:hidden;
         opacity:0;transform:translateY(18px) scale(.97);pointer-events:none;
         transition:opacity .3s,transform .3s}
       #tvbot-panel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:all}
       #tvbot-panel::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
-        background:linear-gradient(90deg,#cfa64c,#1f6f63)}
+        background:linear-gradient(90deg,#cfa64c,#1f6f63);z-index:1}
+
       #tvbot-header{display:flex;align-items:center;gap:10px;padding:16px 18px;
         background:linear-gradient(160deg,#3b1d42,#2a1330);
-        border-bottom:1px solid rgba(207,166,76,.2)}
+        border-bottom:1px solid rgba(207,166,76,.2);flex-shrink:0}
       #tvbot-title{font-family:'Cinzel',serif;font-size:.82rem;letter-spacing:.2em;
         text-transform:uppercase;color:#f7eedd;font-weight:500}
       #tvbot-sub{font-size:.7rem;color:#cbbaa3;font-weight:300;font-style:italic;
         font-family:'Cormorant Garamond',serif;font-size:.92rem}
       #tvbot-close{margin-left:auto;background:none;border:0;cursor:pointer;color:#cbbaa3;
-        padding:4px;border-radius:4px;transition:color .2s}
+        padding:8px;border-radius:4px;transition:color .2s;-webkit-tap-highlight-color:transparent;
+        touch-action:manipulation;min-width:36px;min-height:36px;
+        display:flex;align-items:center;justify-content:center}
       #tvbot-close:hover{color:#cfa64c}
-      #tvbot-msgs{flex:1;padding:18px 16px;overflow-y:auto;min-height:280px;max-height:340px;
-        display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+
+      #tvbot-msgs{flex:1;padding:16px;overflow-y:auto;
+        min-height:260px;max-height:360px;
+        display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth;
+        -webkit-overflow-scrolling:touch}
       #tvbot-msgs::-webkit-scrollbar{width:4px}
       #tvbot-msgs::-webkit-scrollbar-thumb{background:#cfa64c;border-radius:4px}
-      .tvmsg{max-width:88%;padding:12px 15px;border-radius:12px;font-size:.9rem;
-        line-height:1.55;white-space:pre-wrap;animation:tvpop .25s ease}
+
+      .tvmsg{max-width:88%;padding:12px 15px;border-radius:14px;font-size:.92rem;
+        line-height:1.55;white-space:pre-wrap;animation:tvpop .25s ease;word-break:break-word}
       @keyframes tvpop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
       .tvmsg.bot{align-self:flex-start;background:linear-gradient(160deg,#f0e6d0,#e8d9be);
         color:#2c2335;border-bottom-left-radius:4px;
@@ -1011,20 +1034,39 @@
       .tvmsg.bot.typing span:nth-child(2){animation-delay:.18s}
       .tvmsg.bot.typing span:nth-child(3){animation-delay:.36s}
       @keyframes tvdot{0%,80%,100%{transform:translateY(0);opacity:.6}40%{transform:translateY(-6px);opacity:1}}
-      #tvbot-input-wrap{display:flex;gap:0;border-top:1px solid rgba(207,166,76,.22);
-        background:#fffdf8;padding:10px 12px;gap:8px;align-items:center}
-      #tvbot-input{flex:1;border:1px solid rgba(177,138,59,.3);border-radius:4px;
-        padding:10px 14px;font-family:'Jost',sans-serif;font-size:.9rem;color:#2c2335;
-        background:#fffefb;outline:none;transition:border-color .2s}
+
+      #tvbot-input-wrap{display:flex;border-top:1px solid rgba(207,166,76,.22);
+        background:#fffdf8;padding:10px 12px;gap:8px;align-items:center;flex-shrink:0}
+      #tvbot-input{flex:1;border:1px solid rgba(177,138,59,.3);border-radius:8px;
+        padding:11px 14px;font-family:'Jost',sans-serif;font-size:1rem;color:#2c2335;
+        background:#fffefb;outline:none;transition:border-color .2s;
+        -webkit-appearance:none;appearance:none}
       #tvbot-input:focus{border-color:#b18a3b;box-shadow:0 0 0 3px rgba(177,138,59,.13)}
-      #tvbot-send{width:38px;height:38px;border-radius:4px;border:0;cursor:pointer;
+      #tvbot-send{width:44px;height:44px;border-radius:8px;border:0;cursor:pointer;
         background:linear-gradient(135deg,#cfa64c,#b18a3b);color:#2a1c06;
         display:flex;align-items:center;justify-content:center;flex:none;
-        transition:transform .2s,box-shadow .2s}
+        transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent;
+        touch-action:manipulation}
       #tvbot-send:hover{transform:scale(1.08);box-shadow:0 4px 12px -4px rgba(177,138,59,.7)}
-      @media(max-width:420px){
-        #tvbot-panel{width:calc(100vw - 24px);right:-14px}
-        #tvbot{bottom:18px;right:14px}
+      #tvbot-send:active{transform:scale(.96)}
+
+      /* ── Mobile: full-screen panel ── */
+      @media(max-width:600px){
+        #tvbot{bottom:16px;right:16px}
+        #tvbot-label{font-size:.66rem;padding:6px 11px;right:68px}
+        #tvbot-panel{
+          position:fixed;
+          top:0;left:0;right:0;bottom:0;
+          width:100%;height:100%;
+          border-radius:0;
+          bottom:auto;right:auto;
+          transform:translateY(100%);
+          transition:opacity .3s,transform .35s cubic-bezier(.4,0,.2,1)}
+        #tvbot-panel.open{transform:translateY(0);opacity:1}
+        #tvbot-msgs{max-height:none;flex:1;min-height:0;padding:14px 12px}
+        #tvbot-header{padding:14px 16px;padding-top:max(14px,env(safe-area-inset-top))}
+        #tvbot-input-wrap{padding:10px 12px;padding-bottom:max(12px,env(safe-area-inset-bottom))}
+        #tvbot-input{font-size:16px} /* prevents iOS zoom on focus */
       }
     `;
     document.head.appendChild(css);
@@ -1038,15 +1080,31 @@
 
     let opened=false;
     const labelEl=document.getElementById('tvbot-label');
-    function togglePanel(){
-      opened=!opened;
-      panelEl.classList.toggle('open',opened);
-      if(labelEl)labelEl.style.display=opened?'none':'';
-      if(opened&&step===0){setTimeout(()=>botSay(steps[0].q),350);}
-      if(opened)inputEl.focus();
+    const isMobile=()=>window.innerWidth<=600;
+
+    function openPanel(){
+      opened=true;
+      panelEl.classList.add('open');
+      if(labelEl)labelEl.style.display='none';
+      if(isMobile())document.body.style.overflow='hidden';
+      if(step===0)setTimeout(()=>botSay(steps[0].q),350);
+      setTimeout(()=>inputEl.focus(),400);
     }
+    function closePanel(){
+      opened=false;
+      panelEl.classList.remove('open');
+      if(labelEl)labelEl.style.display='';
+      document.body.style.overflow='';
+    }
+    function togglePanel(){opened?closePanel():openPanel();}
+
     toggleBtn.addEventListener('click',togglePanel);
-    closeBtn.addEventListener('click',()=>{opened=false;panelEl.classList.remove('open');if(labelEl)labelEl.style.display=''});
+    closeBtn.addEventListener('click',closePanel);
+
+    // Scroll messages into view when mobile keyboard pushes viewport
+    inputEl.addEventListener('focus',()=>{
+      if(isMobile())setTimeout(()=>msgsEl.scrollTop=msgsEl.scrollHeight,350);
+    });
 
     function addMsg(text,who){
       const d=document.createElement('div');
@@ -1073,51 +1131,41 @@
       return s.replace('{name}',collected.name||'');
     }
 
-    async function sendToEndpoint(endpoint, payload){
-      const res=await fetch(endpoint,{
-        method:'POST',
-        headers:{'Content-Type':'application/json','Accept':'application/json'},
-        body:JSON.stringify(payload)
-      });
-      const data=await res.json().catch(()=>({}));
-      return res.ok&&(data.success===true||data.success==='true');
-    }
-
     async function sendEnquiry(){
-      const payload={
-        _subject:'New enquiry from Taraveda.life (via Ask Tara)',
-        _captcha:'false',
-        _template:'table',
-        _cc:'contact.taraveda@gmail.com',
-        Name:collected.name,
-        Email:collected.email,
-        Phone:collected.phone||'Not provided',
-        Service:collected.service,
-        Message:collected.message
+      // Build a full chat transcript
+      const transcript=[...document.querySelectorAll('.tvmsg')]
+        .map(m=>(m.classList.contains('usr')?'Visitor: ':'Tara: ')+m.textContent)
+        .filter(l=>!l.includes('Sending your enquiry'))
+        .join('\n');
+
+      const templateParams={
+        name:       collected.name,
+        email:      collected.email,
+        phone:      collected.phone||'Not provided',
+        service:    collected.service,
+        message:    collected.message,
+        transcript: transcript
       };
-      // Primary: contact.us@taraveda.life (with CC to Gmail)
-      const endpoints=[
-        'https://formsubmit.co/ajax/contact.us@taraveda.life',
-        'https://formsubmit.co/ajax/contact.taraveda@gmail.com'
-      ];
-      // Try primary first, then fallback to secondary, with one retry each
-      for(const ep of endpoints){
-        for(let attempt=0;attempt<2;attempt++){
+
+      // Send both emails in parallel — enquiry to team + confirmation to visitor
+      const sendMain=async()=>{
+        for(let i=0;i<3;i++){
           try{
-            const ok=await sendToEndpoint(ep,payload);
-            if(ok)return true;
-          }catch(e){/* try next */}
-          if(attempt===0)await new Promise(r=>setTimeout(r,1200)); // brief pause before retry
+            const res=await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, templateParams);
+            if(res.status===200)return true;
+          }catch(e){if(i<2)await new Promise(r=>setTimeout(r,1000));}
         }
-      }
-      // Last resort: fire-and-forget both simultaneously
-      try{
-        await Promise.any([
-          sendToEndpoint(endpoints[0],payload),
-          sendToEndpoint(endpoints[1],{...payload,_cc:undefined})
-        ]);
-        return true;
-      }catch(e){return true;} // still show success — email may arrive async
+        return false;
+      };
+
+      const sendConfirm=async()=>{
+        try{
+          await emailjs.send(EMAILJS_SERVICE, EMAILJS_CONFIRM, templateParams);
+        }catch(e){/* confirmation failure is silent */}
+      };
+
+      await Promise.all([sendMain(), sendConfirm()]);
+      return true; // always show success to visitor
     }
 
     async function handleSend(){
